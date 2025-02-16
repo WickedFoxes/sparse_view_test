@@ -7,9 +7,10 @@
     
     conda create -n JDINet python=3.7
     conda activate JDINet
-    <!-- conda remove pytorch-cpu cpuonly -->
 
-    pip install torch==1.9.0+cu111 torchvision==0.10.0+cu111 torchaudio==0.9.0 -f https://download.pytorch.org/whl/torch_stable.html
+    conda install -c conda-forge cudatoolkit=10.0 -y
+    conda install -c conda-forge cudnn -y
+    pip install torch==1.9.0+cu102 torchvision==0.10.0+cu102 torchaudio==0.9.0 -f https://download.pytorch.org/whl/torch_stable.html
     conda install -c astra-toolbox -c nvidia astra-toolbox
 
     cd FusionLowDoseCBCT
@@ -22,7 +23,7 @@
 ### interpolation, fdk
     conda activate JDINet
     cd FusionLowDoseCBCT/JDINet
-    python interpolation_and_fdk --div 2 --model_path "./saved_model/JDINet_inter.pth" --dataset_dir "../ld_proj/walnut_19/good" --interpolation_dir "../walnut19_div2_interpolation" --fdk_dir "../walnut19_div2_interpolation_fkd"
+    python interpolation_and_fdk.py --div 2 --model_path "./saved_model/JDINet_inter.pth" --dataset_dir "../ld_proj/walnut_19/good" --interpolation_dir "../walnut19_div2_interpolation" --fdk_dir "../walnut19_div2_interpolation_fkd"
 
 interpolation 결과 : tif, float 0 ~ 1 정규화값, (640, 640)
 
