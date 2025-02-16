@@ -41,86 +41,98 @@ with tf.Session() as sess:
             a=imageio.imread(os.path.join(fdkDir,f"fdk_{(cc+1):06d}.png")).astype(float)
             recon[:,:,cc] = (a-a.min())/(a.max()-a.min())
 
-        # print('Testing')
-        # batch = np.zeros((448, 448, 9, 1), dtype=np.float32)
-        # batch[:,:,0,0] = recon[:,:,0]
-        # batch[:,:,1,0] = recon[:,:,0]
-        # batch[:,:,2,0] = recon[:,:,0]
-        # batch[:,:,3,0] = recon[:,:,0]
-        # batch[:,:,4,0] = recon[:,:,0]
-        # batch[:,:,5,0] = recon[:,:,1]
-        # batch[:,:,6,0] = recon[:,:,2]
-        # batch[:,:,7,0] = recon[:,:,3]
-        # batch[:,:,8,0] = recon[:,:,4]
-        # image = np.expand_dims(batch,axis=0)
-        # image_recon = sess.run(Gz, feed_dict={gen_in: image})
-        # image_recon = np.resize(image_recon,[448,448,9])
-        # img = image_recon[:,:,4]
-        # img[img < 0.0]=0.0
-        # img[img > 1.0]=1.0
-        # imageio.imsave(os.path.join(postDir, "test1.png"), img)
+        print('Testing')
+        batch = np.zeros((448, 448, 9, 1), dtype=np.float32)
+        print(1)
+        batch[:,:,0,0] = recon[:,:,0]
+        batch[:,:,1,0] = recon[:,:,0]
+        batch[:,:,2,0] = recon[:,:,0]
+        batch[:,:,3,0] = recon[:,:,0]
+        batch[:,:,4,0] = recon[:,:,0]
+        batch[:,:,5,0] = recon[:,:,1]
+        batch[:,:,6,0] = recon[:,:,2]
+        batch[:,:,7,0] = recon[:,:,3]
+        batch[:,:,8,0] = recon[:,:,4]
+        image = np.expand_dims(batch,axis=0)
+        image_recon = sess.run(Gz, feed_dict={gen_in: image})
+        image_recon = np.resize(image_recon,[448,448,9])
+        img = image_recon[:,:,4]
+        img[img < 0.0]=0.0
+        img[img > 1.0]=1.0
+        img=255.0*(img-img.min())/(img.max()-img.min())
+        img=img.astype(np.uint8)
+        imageio.imsave(os.path.join(postDir, f"fdk_{(1):06d}.png"), img)
 
-        # batch = np.zeros((448, 448, 9, 1), dtype=np.float32)
-        # batch[:,:,0,0] = recon[:,:,0]
-        # batch[:,:,1,0] = recon[:,:,0]
-        # batch[:,:,2,0] = recon[:,:,0]
-        # batch[:,:,3,0] = recon[:,:,0]
-        # batch[:,:,4,0] = recon[:,:,1]
-        # batch[:,:,5,0] = recon[:,:,2]
-        # batch[:,:,6,0] = recon[:,:,3]
-        # batch[:,:,7,0] = recon[:,:,4]
-        # batch[:,:,8,0] = recon[:,:,5]
-        # image = np.expand_dims(batch,axis=0)
-        # image_recon = sess.run(Gz, feed_dict={gen_in: image})
-        # image_recon = np.resize(image_recon,[448,448,9])
-        # img = image_recon[:,:,4]
-        # img[img < 0.0]=0.0
-        # img[img > 1.0]=1.0
-        # imageio.imsave(os.path.join(postDir, "test2.png"), img)
-
-
-        # batch = np.zeros((448, 448, 9, 1), dtype=np.float32)
-        # batch[:,:,0,0] = recon[:,:,0]
-        # batch[:,:,1,0] = recon[:,:,0]
-        # batch[:,:,2,0] = recon[:,:,0]
-        # batch[:,:,3,0] = recon[:,:,1]
-        # batch[:,:,4,0] = recon[:,:,2]
-        # batch[:,:,5,0] = recon[:,:,3]
-        # batch[:,:,6,0] = recon[:,:,4]
-        # batch[:,:,7,0] = recon[:,:,5]
-        # batch[:,:,8,0] = recon[:,:,6]
-        # image = np.expand_dims(batch,axis=0)
-        # image_recon = sess.run(Gz, feed_dict={gen_in: image})
-        # image_recon = np.resize(image_recon,[448,448,9])
-        # img = image_recon[:,:,4]
-        # img[img < 0.0]=0.0
-        # img[img > 1.0]=1.0
-        # imageio.imsave(os.path.join(postDir, "test3.png"), img)
-
-
-
-        # batch = np.zeros((448, 448, 9, 1), dtype=np.float32)
-        # batch[:,:,0,0] = recon[:,:,0]
-        # batch[:,:,1,0] = recon[:,:,0]
-        # batch[:,:,2,0] = recon[:,:,1]
-        # batch[:,:,3,0] = recon[:,:,2]
-        # batch[:,:,4,0] = recon[:,:,3]
-        # batch[:,:,5,0] = recon[:,:,4]
-        # batch[:,:,6,0] = recon[:,:,5]
-        # batch[:,:,7,0] = recon[:,:,6]
-        # batch[:,:,8,0] = recon[:,:,7]
-        # image = np.expand_dims(batch,axis=0)
-        # image_recon = sess.run(Gz, feed_dict={gen_in: image})
-        # image_recon = np.resize(image_recon,[448,448,9])
-        # img = image_recon[:,:,4]
-        # img[img < 0.0]=0.0
-        # img[img > 1.0]=1.0
-        # imageio.imsave(os.path.join(postDir, "test4.png"), img)
+        batch = np.zeros((448, 448, 9, 1), dtype=np.float32)
+        print(2)
+        batch[:,:,0,0] = recon[:,:,0]
+        batch[:,:,1,0] = recon[:,:,0]
+        batch[:,:,2,0] = recon[:,:,0]
+        batch[:,:,3,0] = recon[:,:,0]
+        batch[:,:,4,0] = recon[:,:,1]
+        batch[:,:,5,0] = recon[:,:,2]
+        batch[:,:,6,0] = recon[:,:,3]
+        batch[:,:,7,0] = recon[:,:,4]
+        batch[:,:,8,0] = recon[:,:,5]
+        image = np.expand_dims(batch,axis=0)
+        image_recon = sess.run(Gz, feed_dict={gen_in: image})
+        image_recon = np.resize(image_recon,[448,448,9])
+        img = image_recon[:,:,4]
+        img[img < 0.0]=0.0
+        img[img > 1.0]=1.0
+        img=255.0*(img-img.min())/(img.max()-img.min())
+        img=img.astype(np.uint8)
+        imageio.imsave(os.path.join(postDir, f"fdk_{(2):06d}.png"), img)
 
 
         batch = np.zeros((448, 448, 9, 1), dtype=np.float32)
-        for i in range(0, 200):
-            print(i+1)
+        print(3)
+        batch[:,:,0,0] = recon[:,:,0]
+        batch[:,:,1,0] = recon[:,:,0]
+        batch[:,:,2,0] = recon[:,:,0]
+        batch[:,:,3,0] = recon[:,:,1]
+        batch[:,:,4,0] = recon[:,:,2]
+        batch[:,:,5,0] = recon[:,:,3]
+        batch[:,:,6,0] = recon[:,:,4]
+        batch[:,:,7,0] = recon[:,:,5]
+        batch[:,:,8,0] = recon[:,:,6]
+        image = np.expand_dims(batch,axis=0)
+        image_recon = sess.run(Gz, feed_dict={gen_in: image})
+        image_recon = np.resize(image_recon,[448,448,9])
+        img = image_recon[:,:,4]
+        img[img < 0.0]=0.0
+        img[img > 1.0]=1.0
+        img=255.0*(img-img.min())/(img.max()-img.min())
+        img=img.astype(np.uint8)
+        imageio.imsave(os.path.join(postDir, f"fdk_{(3):06d}.png"), img)
+
+
+
+        batch = np.zeros((448, 448, 9, 1), dtype=np.float32)
+        print(4)
+        batch[:,:,0,0] = recon[:,:,0]
+        batch[:,:,1,0] = recon[:,:,0]
+        batch[:,:,2,0] = recon[:,:,1]
+        batch[:,:,3,0] = recon[:,:,2]
+        batch[:,:,4,0] = recon[:,:,3]
+        batch[:,:,5,0] = recon[:,:,4]
+        batch[:,:,6,0] = recon[:,:,5]
+        batch[:,:,7,0] = recon[:,:,6]
+        batch[:,:,8,0] = recon[:,:,7]
+        image = np.expand_dims(batch,axis=0)
+        image_recon = sess.run(Gz, feed_dict={gen_in: image})
+        image_recon = np.resize(image_recon,[448,448,9])
+        img = image_recon[:,:,4]
+        img[img < 0.0]=0.0
+        img[img > 1.0]=1.0
+        img=255.0*(img-img.min())/(img.max()-img.min())
+        img=img.astype(np.uint8)
+        imageio.imsave(os.path.join(postDir, f"fdk_{(4):06d}.png"), img)
+
+
+        batch = np.zeros((448, 448, 9, 1), dtype=np.float32)
+        for i in range(192):
+            print(i+5)
             batch[:,:,0,0] = recon[:,:,i]
             batch[:,:,1,0] = recon[:,:,i+1]
             batch[:,:,2,0] = recon[:,:,i+2]
@@ -136,7 +148,97 @@ with tf.Session() as sess:
             img = image_recon[:,:,4]
             img[img < 0.0]=0.0
             img[img > 1.0]=1.0
-
             img=255.0*(img-img.min())/(img.max()-img.min())
             img=img.astype(np.uint8)
-            imageio.imsave(os.path.join(postDir, f"fdk_{(i+1):06d}.png"), img)
+            imageio.imsave(os.path.join(postDir, f"fdk_{(i+5):06d}.png"), img)
+
+
+
+        batch = np.zeros((448, 448, 9, 1), dtype=np.float32)
+        print(197)
+        batch[:,:,0,0] = recon[:,:,192]
+        batch[:,:,1,0] = recon[:,:,193]
+        batch[:,:,2,0] = recon[:,:,194]
+        batch[:,:,3,0] = recon[:,:,195]
+        batch[:,:,4,0] = recon[:,:,196]
+        batch[:,:,5,0] = recon[:,:,197]
+        batch[:,:,6,0] = recon[:,:,198]
+        batch[:,:,7,0] = recon[:,:,199]
+        batch[:,:,8,0] = recon[:,:,199]
+        image = np.expand_dims(batch,axis=0)
+        image_recon = sess.run(Gz, feed_dict={gen_in: image})
+        image_recon = np.resize(image_recon,[448,448,9])
+        img = image_recon[:,:,4]
+        img[img < 0.0]=0.0
+        img[img > 1.0]=1.0
+        img=255.0*(img-img.min())/(img.max()-img.min())
+        img=img.astype(np.uint8)
+        imageio.imsave(os.path.join(postDir, f"fdk_{(197):06d}.png"), img)
+
+
+        batch = np.zeros((448, 448, 9, 1), dtype=np.float32)
+        print(198)
+        batch[:,:,0,0] = recon[:,:,193]
+        batch[:,:,1,0] = recon[:,:,194]
+        batch[:,:,2,0] = recon[:,:,195]
+        batch[:,:,3,0] = recon[:,:,196]
+        batch[:,:,4,0] = recon[:,:,197]
+        batch[:,:,5,0] = recon[:,:,198]
+        batch[:,:,6,0] = recon[:,:,199]
+        batch[:,:,7,0] = recon[:,:,199]
+        batch[:,:,8,0] = recon[:,:,199]
+        image = np.expand_dims(batch,axis=0)
+        image_recon = sess.run(Gz, feed_dict={gen_in: image})
+        image_recon = np.resize(image_recon,[448,448,9])
+        img = image_recon[:,:,4]
+        img[img < 0.0]=0.0
+        img[img > 1.0]=1.0
+        img=255.0*(img-img.min())/(img.max()-img.min())
+        img=img.astype(np.uint8)
+        imageio.imsave(os.path.join(postDir, f"fdk_{(198):06d}.png"), img)
+
+
+
+        batch = np.zeros((448, 448, 9, 1), dtype=np.float32)
+        print(199)
+        batch[:,:,0,0] = recon[:,:,194]
+        batch[:,:,1,0] = recon[:,:,195]
+        batch[:,:,2,0] = recon[:,:,196]
+        batch[:,:,3,0] = recon[:,:,197]
+        batch[:,:,4,0] = recon[:,:,198]
+        batch[:,:,5,0] = recon[:,:,199]
+        batch[:,:,6,0] = recon[:,:,199]
+        batch[:,:,7,0] = recon[:,:,199]
+        batch[:,:,8,0] = recon[:,:,199]
+        image = np.expand_dims(batch,axis=0)
+        image_recon = sess.run(Gz, feed_dict={gen_in: image})
+        image_recon = np.resize(image_recon,[448,448,9])
+        img = image_recon[:,:,4]
+        img[img < 0.0]=0.0
+        img[img > 1.0]=1.0
+        img=255.0*(img-img.min())/(img.max()-img.min())
+        img=img.astype(np.uint8)
+        imageio.imsave(os.path.join(postDir, f"fdk_{(199):06d}.png"), img)
+
+
+
+        batch = np.zeros((448, 448, 9, 1), dtype=np.float32)
+        print(200)
+        batch[:,:,0,0] = recon[:,:,195]
+        batch[:,:,1,0] = recon[:,:,196]
+        batch[:,:,2,0] = recon[:,:,197]
+        batch[:,:,3,0] = recon[:,:,198]
+        batch[:,:,4,0] = recon[:,:,199]
+        batch[:,:,5,0] = recon[:,:,199]
+        batch[:,:,6,0] = recon[:,:,199]
+        batch[:,:,7,0] = recon[:,:,199]
+        batch[:,:,8,0] = recon[:,:,199]
+        image = np.expand_dims(batch,axis=0)
+        image_recon = sess.run(Gz, feed_dict={gen_in: image})
+        image_recon = np.resize(image_recon,[448,448,9])
+        img = image_recon[:,:,4]
+        img[img < 0.0]=0.0
+        img[img > 1.0]=1.0
+        img=255.0*(img-img.min())/(img.max()-img.min())
+        img=img.astype(np.uint8)
+        imageio.imsave(os.path.join(postDir, f"fdk_{(200):06d}.png"), img)
