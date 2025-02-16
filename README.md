@@ -22,17 +22,18 @@
 ### interpolation, fdk
     conda activate JDINet
     cd FusionLowDoseCBCT/JDINet
-    python interpolation_and_fdk --div 2 --dataset_dir "../ld_proj/walnut_19/good" --interpolation_dir "../walnut19_div2_interpolation" --fdk_dir "../walnut19_div2_interpolation_fkd"
+    python interpolation_and_fdk --div 2 --model_path "./saved_model/JDINet_inter.pth" --dataset_dir "../ld_proj/walnut_19/good" --interpolation_dir "../walnut19_div2_interpolation" --fdk_dir "../walnut19_div2_interpolation_fkd"
 
-interpolation 결과 : tif, float 0~1 정규화값, (640, 640)
-fdk 결과 : png, uint8 0~255, (448, 448)
+interpolation 결과 : tif, float 0 ~ 1 정규화값, (640, 640)
+
+fdk 결과 : png, uint8 0 ~ 255, (448, 448)
 
 ### postnet
     conda activate JDINet
     cd FusionLowDoseCBCT/PostNet
     python postprocess.py --fdk_dir "../walnut19_div2_interpolation_fkd" --post_dir "../walnut19_div2_interpolation_fkd_post"
 
-postnet 결과 : png, uint8 0~255, (448, 448)
+postnet 결과 : png, uint8 0 ~ 255, (448, 448)
 
 ## InterpAny-Clearer
 ### 라이브러리 설치
