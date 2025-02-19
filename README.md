@@ -23,26 +23,54 @@
 ### interpolation, fdk
     conda activate JDINet
     cd FusionLowDoseCBCT/JDINet
-    python interpolation_and_fdk.py --div 2 --model_path "./saved_model/JDINet_inter.pth" --dataset_dir "../ld_proj/walnut_19/good" --interpolation_dir "../walnut19_div2_interpolation" --fdk_dir "../walnut19_div2_interpolation_fkd"
+
+    python interpolation_and_fdk.py \
+    --div 2 \
+    --model_path "./saved_model/JDINet_inter.pth" \
+    --dataset_dir "../ld_proj/walnut_19/good" \
+    --interpolation_dir "../walnut19_div2_interpolation" \
+    --fdk_dir "../walnut19_div2_interpolation_fkd"
 
 interpolation 결과 : tif, float 0 ~ 1 정규화값, (640, 640)
+
+fdk 결과 : png, uint8 0 ~ 255, (448, 448)
+
+### only fdk
+    cd FusionLowDoseCBCT
+
+    python fdk.py \
+    --interpolation_dir "../walnut19_div2_interpolation" \
+    --fdk_dir "../walnut19_div2_interpolation_fkd"
 
 fdk 결과 : png, uint8 0 ~ 255, (448, 448)
 
 ### postnet
     conda activate JDINet
     cd FusionLowDoseCBCT/PostNet
-    python postprocess.py --fdk_dir "../walnut19_div2_interpolation_fkd" --post_dir "../walnut19_div2_interpolation_fkd_post"
+
+    python postprocess.py \
+    --fdk_dir "../walnut19_div2_interpolation_fkd" \
+    --post_dir "../walnut19_div2_interpolation_fkd_post"
 
 postnet 결과 : png, uint8 0 ~ 255, (448, 448)
 
-## InterpAny-Clearer
-### 라이브러리 설치
-    git clone https://github.com/zzh-tech/InterpAny-Clearer.git
-    
-    conda create -n InterpAny python=3.8
-    conda activate InterpAny
+## EMA-VFI
+### 라이브러리 설치    
+    conda create -n EMA-VFI python=3.8
+    conda activate EMA-VFI
+
     pip install torch==1.12.1+cu116 torchvision==0.13.1+cu116 torchaudio==0.12.1 --extra-index-url https://download.pytorch.org/whl/cu116
-    
-    cd InterpAny-Clearer
-    pip install -r requirements.txt
+    pip install scikit-image==0.19.2 numpy==1.23.1 opencv-python==4.6.0.66 timm==0.6.11 tqdm
+	conda install -c astra-toolbox -c nvidia astra-toolbox
+
+### interpolation
+    conda activate EMA-VFI
+    cd EMA-VFI/interpolator
+
+    python interp_test.py \
+    --model_name "ours_small" \
+    --div 2 \
+    --dataset_dir "/home/byeoli0832/sparse_view_test/ld_proj/walnut_19/good/" \
+    --interpolation_dir "/home/byeoli0832/sparse_view_test/ours_small_walnut19_div2_interpolation"
+
+interpolation 결과 : tif, float 0 ~ 1 정규화값, (640, 640)

@@ -5,7 +5,6 @@ import torch
 import numpy as np
 import imageio
 import time
-import matplotlib.pyplot as plt
 import scipy.io as io
 from torch.autograd import Variable
 from torch.nn import functional as F
@@ -56,6 +55,7 @@ def crop_center(image_path, crop_size=640):
 
 parser = argparse.ArgumentParser()
 parser.add_argument('--div', type=int, default=1, help=' : Please set the num') 
+parser.add_argument('--model_path', type=str, default="./saved_model/JDINet_inter.pth", help=' : Please set the dir')
 parser.add_argument('--dataset_dir', type=str, default="../ld_proj/walnut_19/good", help=' : Please set the dir')
 parser.add_argument('--interpolation_dir', type=str, default="../full_clean_proj", help=' : Please set the dir')
 parser.add_argument('--fdk_dir', type=str, default="../good_fdk_reconstruction", help=' : Please set the dir')
@@ -89,7 +89,7 @@ model = UNet_3D_2D(args.model.lower() ,
                    upmode=args.upmode)
 model=model.to(device)
 
-model_path='./saved_model/JDINet_inter.pth'
+model_path=args.model_path
 model_dict=model.state_dict()
 model.load_state_dict(torch.load(model_path)["state_dict"] , strict=True)
 model.eval()
@@ -167,8 +167,6 @@ else:
 # FDK reconstruction
 
 ##################################################################
-
-
 angluar_sub_sampling = 1
 voxel_per_mm = 10
 
