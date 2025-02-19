@@ -47,7 +47,7 @@ class MultiScaleFlow(nn.Module):
         super(MultiScaleFlow, self).__init__()
         self.flow_num_stage = len(kargs['hidden_dims'])
         self.feature_bone = backbone
-        self.data_chans = kargs['data_chans']
+        self.data_chans = kargs['in_chans']
         if self.data_chans == 1:
             head_in_else = (2, 9)
         elif self.data_chans == 3:

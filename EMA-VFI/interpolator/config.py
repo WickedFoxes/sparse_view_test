@@ -8,7 +8,8 @@ from model import flow_estimation
 def init_model_config(I=3, F=32, W=7, depth=[2, 2, 2, 4, 4]):
     '''This function should not be modified'''
     return { 
-        'data_chans':I,
+        # 'data_chans':I,
+        'in_chans':I,
         'embed_dims':[F, 2*F, 4*F, 8*F, 16*F],
         'motion_dims':[0, 0, 0, 8*F//depth[-2], 16*F//depth[-1]],
         'num_heads':[8*F//32, 16*F//32],
@@ -18,7 +19,8 @@ def init_model_config(I=3, F=32, W=7, depth=[2, 2, 2, 4, 4]):
         'depths':depth,
         'window_sizes':[W, W]
     }, {
-        'data_chans':I,
+        # 'data_chans':I,
+        'in_chans':I,
         'embed_dims':[F, 2*F, 4*F, 8*F, 16*F],
         'motion_dims':[0, 0, 0, 8*F//depth[-2], 16*F//depth[-1]],
         'depths':depth,

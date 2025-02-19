@@ -27,7 +27,7 @@ MODEL_CONFIG = {
     )
 }
 MODEL_CONFIG = {
-    'LOGNAME': 'ours_small',
+    'LOGNAME': 'ours_small_t',
     'MODEL_TYPE': (feature_extractor, flow_estimation),
     'MODEL_ARCH': init_model_config(
         I = 3,
@@ -36,17 +36,17 @@ MODEL_CONFIG = {
         depth = [2, 2, 2, 2, 2]
     )
 }
-MODEL_CONFIG = {
-    'LOGNAME': 'ours',
-    'MODEL_TYPE': (feature_extractor, flow_estimation),
-    'MODEL_ARCH': init_model_config(
-        I = 3,
-        F = 32,
-        W = 7,
-        depth = [2, 2, 2, 4, 4]
-    )
-}
-in_chans = MODEL_CONFIG['MODEL_ARCH'][0]['data_chans']
+# MODEL_CONFIG = {
+#     'LOGNAME': 'ours_t',
+#     'MODEL_TYPE': (feature_extractor, flow_estimation),
+#     'MODEL_ARCH': init_model_config(
+#         I = 3,
+#         F = 32,
+#         W = 7,
+#         depth = [2, 2, 2, 4, 4]
+#     )
+# }
+in_chans = MODEL_CONFIG['MODEL_ARCH'][0]['in_chans']
 trainset = dataset.PathDataset( # test
     sorted(list(Path("/home/kcj/nas_aict/dataset/CT/Walnuts/Walnut1/Projections/tubeV2").glob("*scan*.tif"))),
     fold = 8,
@@ -63,8 +63,11 @@ validset = dataset.PathDataset(
 validloader = torch.utils.data.DataLoader(validset, batch_size=1, shuffle=False)
 model = Model(MODEL_CONFIG)
 model.device()
-# model.load_model(MODEL_CONFIG['LOGNAME'])
-print("Model loaded")
+try:
+    model.load_model(MODEL_CONFIG['LOGNAME'])
+    print("Model loaded")
+except:
+    print("Model not loaded")
 for epoch in range(300):
     pbar = tqdm(trainloader, ncols=100, desc=f"Train {epoch}")
     loss_list = []

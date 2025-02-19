@@ -32,21 +32,11 @@ class Model:
 
     def load_model(self, name=None):
         def convert(param):
-            # print(param)
-            # return {
-            # k.replace("module.", ""): v
-            #     for k, v in param.items()
-            #     if "module." in k and 'attn_mask' not in k and 'HW' not in k
-            # }
-            new_param = {}
-            for k, v in param.items():
-                if 'module.' in k:
-                    new_param[k.replace('module.', '')] = v
-                else:
-                    new_param[k] = v
-                if 'attn_mask' in k or 'HW' in k:
-                    new_param.pop(k)
-            return new_param
+            return {
+            k.replace("module.", ""): v
+                for k, v in param.items()
+                if "module." in k and 'attn_mask' not in k and 'HW' not in k
+            }
         if name is None:
             name = self.name
         self.net.load_state_dict(convert(torch.load(f'ckpt/{name}.pkl')))
