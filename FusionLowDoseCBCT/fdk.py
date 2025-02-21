@@ -11,12 +11,13 @@ import argparse
 parser = argparse.ArgumentParser()
 parser.add_argument('--interpolation_dir', type=str, default="../../ours_small_walnut19_div2_interpolation", help=' : Please set the dir')
 parser.add_argument('--fdk_dir', type=str, default="../../ours_small_walnut19_div2_interpolation_fdk", help=' : Please set the dir')
+parser.add_argument('--div', type=int, default=1, help=' : Please set the num')
 args = parser.parse_args()
 print(args)
 
 for i in range(1):
     # angluar_sub_sampling = 1
-    angluar_sub_sampling = 1
+    angluar_sub_sampling = args.div
     voxel_per_mm = 10
     # data_path='./full_clean_proj/'
     data_path=args.interpolation_dir
@@ -44,7 +45,7 @@ for i in range(1):
     data_path_full = data_path
     # projection index
     # there are in fact 1201, but the last and first one come from the same angle
-    projs_idx = range(0,500, angluar_sub_sampling)
+    projs_idx = range(1,501, angluar_sub_sampling)
     projs_name = 'scan_{:06}.tif'
     #projs_rows = 576
     projs_rows = 640

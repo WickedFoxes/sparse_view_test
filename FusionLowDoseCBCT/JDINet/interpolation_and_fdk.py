@@ -10,13 +10,14 @@ from torch.autograd import Variable
 from torch.nn import functional as F
 from model_inter.JDINet_inter import UNet_3D_2D
 import argparse
+import matplotlib.pyplot as plt
 
 def get_pairData(div, max_num=501):
-    num_list = list(range(0, max_num, div))
+    num_list = list(range(1, max_num, div))
 
     pairData = []
     n = len(num_list)
-    if div%2==0: n=n-1
+    # if div%2==0: n=n-1
     print("pairData 개수 :", n)
 
     for i in range(n):  # 500을 div 크기로 나눈 만큼 반복
@@ -78,22 +79,6 @@ print(args)
 
 ##################################################################
 
-print('cuda' if torch.cuda.is_available() else 'cpu')
-device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
-
-
-model = UNet_3D_2D(args.model.lower() , 
-                   n_inputs=args.nbr_frame, 
-                   n_outputs=args.n_outputs, 
-                   joinType=args.joinType, 
-                   upmode=args.upmode)
-model=model.to(device)
-
-model_path=args.model_path
-model_dict=model.state_dict()
-model.load_state_dict(torch.load(model_path)["state_dict"] , strict=True)
-model.eval()
-
 div = args.div
 dataPath=args.dataset_dir
 interpolationDir=args.interpolation_dir
@@ -102,6 +87,21 @@ pairData=get_pairData(div)
 
 print(pairData.shape, pairData[0])
 print(pairData.shape, pairData[-1])
+
+print('cuda' if torch.cuda.is_available() else 'cpu')
+device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
+
+model = UNet_3D_2D(args.model.lower() , 
+                   n_inputs=args.nbr_frame, 
+                   n_outputs=(div-1), 
+                   joinType=args.joinType, 
+                   upmode=args.upmode)
+model=model.to(device)
+
+model_path=args.model_path
+model_dict=model.state_dict()
+model.load_state_dict(torch.load(model_path)["state_dict"] , strict=True)
+model.eval()
 
 # 폴더가 존재하지 않으면 생성
 os.makedirs(interpolationDir, exist_ok=True)
