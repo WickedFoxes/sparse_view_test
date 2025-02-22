@@ -90,14 +90,14 @@ def normalize_image(image):
 images = []
 
 for proj_id in range(501):
-    file0_name = f"scan_{proj_id:06d}.tif"
-    I0 = crop_center(os.path.join(dataPath, file0_name))
+    file_name = f"scan_{proj_id:06d}.tif"
+    I0 = crop_center(os.path.join(dataPath, file_name))
     I0 = normalize_image(I0)
     images.append(I0)
 
-for proj_id in range(0, 500, div):
+for proj_id in range(1, 501, div):
     I0 = images[proj_id]
-    I2 = images[proj_id%501]
+    I2 = images[(proj_id + div)%501]
 
     # I0_ = (torch.tensor(I0.transpose(2, 0, 1)).cuda() / 255.).unsqueeze(0)
     # I2_ = (torch.tensor(I2.transpose(2, 0, 1)).cuda() / 255.).unsqueeze(0)
@@ -111,6 +111,7 @@ for proj_id in range(0, 500, div):
     temp_idx = proj_id
     for pred in preds:
         temp_idx += 1
+        if(temp_idx > 500): break
         mid = (padder.unpad(pred).detach().cpu().numpy().transpose(1, 2, 0)).astype(np.float32)
         images[temp_idx] = mid
 
@@ -118,6 +119,7 @@ print(len(images))
 for idx in range(501):
     I0 = images[idx]
     img = cv2.cvtColor(I0[:, :, ::-1], cv2.COLOR_BGR2GRAY)
+    img=255.0*(img-img.min())/(img.max()-img.min())
     print(idx, " 변환된 이미지 :", img.shape, img.min(), img.max())  # (H, W, 3)
     iio.imsave(os.path.join(interpolationDir, f"scan_{idx:06d}.tif"), img)
 
